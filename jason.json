@@ -1,0 +1,11 @@
+{
+    "menuItems": [
+        {
+            "name": "อาหาร1",
+            "description": "รายละเอียดอาหาร1",
+            "price": 100,
+            "image": "image1.jpg"
+        }
+        
+    ]
+}

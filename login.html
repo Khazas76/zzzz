@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>เข้าสู่ระบบพนักงาน</title>
+</head>
+<body>
+    <h2>เข้าสู่ระบบพนักงาน</h2>
+    <form id="login-form">
+        <label for="username">ชื่อผู้ใช้:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">รหัสผ่าน:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">เข้าสู่ระบบ</button>
+    </form>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            fetch("http://localhost:3001/staff-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "dashboard.html"; // ไปหน้า Dashboard
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

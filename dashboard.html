@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>แดชบอร์ดพนักงาน</title>
+</head>
+<body>
+    <h2>รายการสั่งซื้อ</h2>
+    <ul id="order-list">
+        <!-- รายการสั่งซื้อจะแสดงที่นี่ -->
+    </ul>
+
+    <script>
+        function fetchOrders() {
+            fetch("http://localhost:3001/staff-dashboard")
+            .then(response => response.json())
+            .then(data => {
+                const orderList = document.getElementById("order-list");
+                orderList.innerHTML = ""; // เคลียร์รายการก่อนอัปเดต
+                data.forEach(order => {
+                    const li = document.createElement("li");
+                    li.textContent = `Order ID: ${order.orderId}, รายการ: ${order.items.map(item => `${item.name} x${item.quantity}`).join(", ")}`;
+                    orderList.appendChild(li);
+                });
+            })
+            .catch(error => console.error("Error fetching orders:", error));
+        }
+
+        // เรียกใช้ fetchOrders ทุกๆ 5 วินาทีเพื่ออัปเดตคำสั่งซื้อโดยอัตโนมัติ
+        setInterval(fetchOrders, 5000);
+        document.addEventListener("DOMContentLoaded", fetchOrders); // เรียกครั้งแรกเมื่อโหลดหน้า
+    </script>
+</body>
+</html>
