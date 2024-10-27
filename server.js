@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;  // ใช้พอร์ตจาก environment variable ถ้ามี
 
 
 app.use(cors({ origin: "*" })); // เปิดใช้ CORS สำหรับทุกโดเมน (หรือระบุเฉพาะ Ngrok URL)
@@ -10,6 +10,7 @@ app.use(express.json());
 const STAFF_USERNAME = "staff";
 const STAFF_PASSWORD = "1234";
 const orders = []; // เก็บรายการสั่งซื้อทั้งหมด
+
 
 // Route สำหรับ Login ของพนักงาน
 app.post("/staff-login", (req, res) => {
@@ -25,9 +26,10 @@ app.post("/staff-login", (req, res) => {
 app.get("/staff-dashboard", (req, res) => {
     res.json(orders);
 });
-
+app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'))
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/หน้าแรก1.html"); // เปลี่ยนเป็นชื่อไฟล์ของคุณ
+    res.sendFile(__dirname + "/public/index.html"); // เปลี่ยนเป็นชื่อไฟล์ของคุณ
 });
 
 
